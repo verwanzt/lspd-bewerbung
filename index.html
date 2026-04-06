@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSPD Bewerbungsportal - Joachim vonWanze</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --dark: #0f1419;
+    --darker: #1a2332;
+    --blue: #1e3a5f;
+    --blue-light: #2d5a8c;
+    --accent: #4a90e2;
+    --accent-light: #6aadff;
+    --bg: #f8f9fa;
+    --text: #1a1a1a;
+    --border: #e0e0e0;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+    color: white;
+    padding: 1.2rem 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+header .status {
+    background: var(--blue);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+    display: flex;
+    gap: 0;
+    background: white;
+    border-bottom: 2px solid var(--accent);
+    padding: 0 2rem;
+    overflow-x: auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+}
+
+.nav-tabs button {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-tabs button:hover {
+    color: var(--blue);
+}
+
+.nav-tabs button.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+/* Main Container */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Sections */
+section {
+    background: white;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-left: 5px solid var(--accent);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 4px;
+}
+
+section h2 {
+    color: var(--blue);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+}
+
+section h3 {
+    color: var(--blue-light);
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Card Grid */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(45, 90, 140, 0.15);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--blue);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+/* Buttons */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--blue);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Info Box */
+.info-box {
+    background: #e7f3ff;
+    border-left: 4px solid var(--accent);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+/* Result Box */
+.result-box {
+    background: #f0f8ff;
+    border: 2px solid var(--accent);
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+}
+
+.result-box h3 {
+    margin-top: 0;
+    color: var(--blue);
+}
+
+/* Copy Button */
+.copy-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.copy-btn:hover {
+    background: var(--blue);
+}
+
+/* Rank Grid */
+.rank-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.rank-item {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    border-left: 4px solid var(--accent);
+}
+
+.rank-number {
+    font-weight: bold;
+    color: var(--blue);
+    font-size: 1.1rem;
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-tabs {
+        padding: 0 1rem;
+    }
+    
+    .nav-tabs button {
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    section {
+        padding: 1.5rem;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🚔 LSPD Bewerbungsportal</h1>
+    <div class="status">Online • Status: Aktiv</div>
+</header>
+
+<div class="nav-tabs" id="navTabs">
+    <button class="tab-btn active" onclick="switchTab('home')">🏠 Home</button>
+    <button class="tab-btn" onclick="switchTab('bewerbung')">📋 Bewerbung</button>
+    <button class="tab-btn" onclick="switchTab('rangstruktur')">📊 Rangstruktur</button>
+    <button class="tab-btn" onclick="switchTab('organigramm')">🏛️ Organigramm</button>
+    <button class="tab-btn" onclick="switchTab('generatoren')">⚙️ Tools</button>
+</div>
+
+<div class="container">
+
+    <!-- HOME TAB -->
+    <div id="home" class="tab-content active">
+        <section>
+            <h2>Willkommen im LSPD Bewerbungsportal</h2>
+            <p>Hallo! Ich bin <strong>Joachim vonWanze</strong> (ID: 135691) und bewerbe mich für die Position des <strong>Chief of Police</strong> im Los Santos Police Department.</p>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3>📋 Bewerbung</h3>
+                    <p>Mehr über meine Qualifikationen und Erfahrung erfahren.</p>
+                </div>
+                <div class="card">
+                    <h3>📊 Rangstruktur</h3>
+                    <p>Das komplette LSPD Rankingsystem entdecken.</p>
+                </div>
+                <div class="card">
+                    <h3>🏛️ Organigramm</h3>
+                    <p>Organisationsaufbau und Hierarchie anschauen.</p>
+                </div>
+                <div class="card">
+                    <h3>⚙️ Tools</h3>
+                    <p>Interaktive Generatoren und Rechner nutzen.</p>
+                </div>
+            </div>
+
+            <h3>Kurzinfo</h3>
+            <div class="info-box">
+                <strong>Joachim vonWanze</strong><br>
+                Character ID: 135691 | Visum: 42<br>
+                Aktueller Rang: Deputy Chief of Police<br>
+                Verfügbarkeit: 2-7 Stunden täglich
+            </div>
+        </section>
+    </div>
+
+    <!-- BEWERBUNG TAB -->
+    <div id="bewerbung" class="tab-content">
+        <section>
+            <h2>Meine Bewerbung zum Chief of Police</h2>
+            
+            <h3>Warum ich diese Position anstrebe</h3>
+            <p>Mit meinen Positionen als SG-Leitung beim SAHP, TOW-Leitung und Deputy Chief of Police habe ich umfangreiche Führungserfahrung sammeln können. Ich bin bereit, das LSPD zu neuerr Höhe zu führen.</p>
+            
+            <h3>Meine Stärken</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Verantwortung</h3>
+                    <p>Ich übernehme volle Verantwortung für Entscheidungen</p>
+                </div>
+                <div class="card">
+                    <h3>Kommunikation</h3>
+                    <p>Klare, transparente und strukturierte Kommunikation</p>
+                </div>
+                <div class="card">
+                    <h3>Teamgeist</h3>
+                    <p>Führung von unten heraus als gleichberechtigter Partner</p>
+                </div>
+            </div>
+
+            <h3>Meine Vision für das LSPD</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>💬 Kommunikation</h3>
+                    <p>Bessere Vernetzung der Abteilungen</p>
+                </div>
+                <div class="card">
+                    <h3>🎯 Effizienz</h3>
+                    <p>Sinnvollere Abläufe implementieren</p>
+                </div>
+                <div class="card">
+                    <h3>🤝 Kooperation</h3>
+                    <p>Verstärkte Zusammenarbeit mit anderen Org.</p>
+                </div>
+                <div class="card">
+                    <h3>🏆 Anerkennung</h3>
+                    <p>Belohnung für engagierte Mitarbeiter</p>
+                </div>
+            </div>
+
+            <h3>Karriereverlauf</h3>
+            <div class="rank-grid">
+                <div class="rank-item">
+                    <div class="rank-number">29. Deputy Chief of Police</div>
+                    <p style="margin: 0.3rem 0;">LSPD (aktuell)</p>
+                </div>
+                <div class="rank-item">
+                    <div class="rank-number">27. Chief of Department</div>
+                    <p style="margin: 0.3rem 0;">LSPD</p>
+                </div>
+                <div class="rank-item">
+                    <div class="rank-number">23. Police Captain – TOW</div>
+                    <p style="margin: 0.3rem 0;">LSPD</p>
+                </div>
+                <div class="rank-item">
+                    <div class="rank-number">Captain – HR & PA</div>
+                    <p style="margin: 0.3rem 0;">SAHP</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- RANGSTRUKTUR TAB -->
+    <div id="rangstruktur" class="tab-content">
+        <section>
+            <h2>LSPD Rangstruktur</h2>
+            <p>Alle Ränge von 01 bis 30 mit vollständiger Hierarchie.</p>
+            
+            <h3>🏛️ High Command & Verwaltung (30-25)</h3>
+            <div class="rank-grid">
+                <div class="rank-item"><strong>30.</strong> Chief of Police</div>
+                <div class="rank-item"><strong>29.</strong> Deputy Chief of Police</div>
+                <div class="rank-item"><strong>28.</strong> Assistant Chief of Police</div>
+                <div class="rank-item"><strong>27.</strong> Bureau Chief</div>
+                <div class="rank-item"><strong>26.</strong> Director of Department</div>
+                <div class="rank-item"><strong>25.</strong> Deputy Director of Department</div>
+            </div>
+
+            <h3>👮 Führungspersonal (24-19)</h3>
+            <div class="rank-grid">
+                <div class="rank-item"><strong>24.</strong> Police Commander</div>
+                <div class="rank-item"><strong>23.</strong> Police Captain</div>
+                <div class="rank-item"><strong>22.</strong> Police Inspector</div>
+                <div class="rank-item"><strong>21.</strong> F.O.R.C.E Officer</div>
+                <div class="rank-item"><strong>20.</strong> S.W.A.T. Commander</div>
+                <div class="rank-item"><strong>19.</strong> Pressesprecher</div>
+            </div>
+
+            <h3>📍 Operative Ränge (18-13)</h3>
+            <div class="rank-grid">
+                <div class="rank-item"><strong>18.</strong> Special Police Officer</div>
+                <div class="rank-item"><strong>17.</strong> Senior Lieutenant</div>
+                <div class="rank-item"><strong>16.</strong> Lieutenant</div>
+                <div class="rank-item"><strong>15.</strong> Sergeant First Class</div>
+                <div class="rank-item"><strong>14.</strong> Sergeant</div>
+                <div class="rank-item"><strong>13.</strong> Senior Corporal</div>
+            </div>
+
+            <h3>⭐ Einstiegsränge (12-01)</h3>
+            <div class="rank-grid">
+                <div class="rank-item"><strong>12.</strong> Corporal</div>
+                <div class="rank-item"><strong>11.</strong> Detective</div>
+                <div class="rank-item"><strong>10.</strong> Supervising Officer</div>
+                <div class="rank-item"><strong>09.</strong> Instructing Officer</div>
+                <div class="rank-item"><strong>08.</strong> Senior Officer</div>
+                <div class="rank-item"><strong>07.</strong> Officer First Class</div>
+                <div class="rank-item"><strong>06.</strong> Officer II</div>
+                <div class="rank-item"><strong>05.</strong> Officer I</div>
+                <div class="rank-item"><strong>04.</strong> Rookie</div>
+                <div class="rank-item"><strong>03.</strong> Traffic Officer</div>
+                <div class="rank-item"><strong>02.</strong> Cadet</div>
+                <div class="rank-item"><strong>01.</strong> Suspendiert</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ORGANIGRAMM TAB -->
+    <div id="organigramm" class="tab-content">
+        <section>
+            <h2>LSPD Organigramm</h2>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <div style="background: linear-gradient(135deg, #2d5a8c 0%, #1e3a5f 100%); color: white; padding: 1.5rem; border-radius: 6px; margin-bottom: 1.5rem; max-width: 300px; margin-left: auto; margin-right: auto;">
+                    <div style="font-size: 0.85rem; color: #6aadff;">Rang 30</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Chief of Police</div>
+                </div>
+
+                <div style="font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem;">↓</div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="background: linear-gradient(135deg, #3a6a9c 0%, #2d5a8c 100%); color: white; padding: 1.5rem; border-radius: 6px;">
+                        <div style="font-size: 0.85rem; color: #6aadff;">Rang 29</div>
+                        <div style="font-weight: bold;">Deputy Chief of Police</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #3a6a9c 0%, #2d5a8c 100%); color: white; padding: 1.5rem; border-radius: 6px;">
+                        <div style="font-size: 0.85rem; color: #6aadff;">Rang 28</div>
+                        <div style="font-weight: bold;">Assistant Chief</div>
+                    </div>
+                </div>
+
+                <div style="font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem;">↓</div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="background: white; border: 2px solid var(--accent); padding: 1rem; border-radius: 6px;">
+                        <div style="font-size: 0.85rem; color: var(--accent);">Bureau of Patrol</div>
+                    </div>
+                    <div style="background: white; border: 2px solid var(--accent); padding: 1rem; border-radius: 6px;">
+                        <div style="font-size: 0.85rem; color: var(--accent);">Bureau of Traffic</div>
+                    </div>
+                    <div style="background: white; border: 2px solid var(--accent); padding: 1rem; border-radius: 6px;">
+                        <div style="font-size: 0.85rem; color: var(--accent);">Bureau of Tactical</div>
+                    </div>
+                    <div style="background: white; border: 2px solid var(--accent); padding: 1rem; border-radius: 6px;">
+                        <div style="font-size: 0.85rem; color: var(--accent);">Bureau of Management</div>
+                    </div>
+                    <div style="background: white; border: 2px solid var(--accent); padding: 1rem; border-radius: 6px;">
+                        <div style="font-size: 0.85rem; color: var(--accent);">Bureau of Internal Affairs</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- GENERATOREN TAB -->
+    <div id="generatoren" class="tab-content">
+        <section>
+            <h2>⚙️ LSPD Tools & Generatoren</h2>
+            
+            <h3>Aktenkopf-Generator</h3>
+            <div class="form-group">
+                <label>Name des Beschuldigten</label>
+                <input type="text" id="akteName" placeholder="z.B. Max Mustermann" value="Joachim vonWanze">
+            </div>
+            
+            <div class="form-group">
+                <label>Character ID</label>
+                <input type="number" id="akteId" placeholder="z.B. 135691" value="135691">
+            </div>
+
+            <div class="form-group">
+                <label>Aktenzeichen</label>
+                <input type="text" id="akteZeichen" placeholder="z.B. 2026-001-LSPD">
+            </div>
+
+            <div class="form-group">
+                <label>Polizeibeamter</label>
+                <input type="text" id="aktePoli" placeholder="z.B. Officer Name">
+            </div>
+
+            <button class="btn btn-primary" onclick="generateAkte()">📄 Akte generieren</button>
+
+            <div id="akteResult"></div>
+
+            <hr style="margin: 2.5rem 0; border: none; border-top: 2px solid var(--border);">
+
+            <h3>Diensterfassung</h3>
+            <div class="card-grid">
+                <div class="form-group">
+                    <label>Dienstbeginn (Uhrzeit)</label>
+                    <input type="time" id="dienstart" value="08:00">
+                </div>
+                <div class="form-group">
+                    <label>Dienst-Ende (Uhrzeit)</label>
+                    <input type="time" id="dienende" value="16:00">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="calculateDienst()">⏱️ Dienststunden berechnen</button>
+
+            <div id="dienstResult"></div>
+
+            <hr style="margin: 2.5rem 0; border: none; border-top: 2px solid var(--border);">
+
+            <h3>Strafrahmen-Rechner</h3>
+            <div class="form-group">
+                <label>Grundstrafe ($)</label>
+                <input type="number" id="grundstrafe" placeholder="Grundstrafe eingeben" value="1000">
+            </div>
+
+            <div class="form-group">
+                <label>Strafmodifikator</label>
+                <select id="modifikator">
+                    <option value="1">Keine (1x)</option>
+                    <option value="0.75">Reue (-25%)</option>
+                    <option value="1.5">Wiederholungstäter (+50%)</option>
+                    <option value="2">Schwer- (+100%)</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="calculateStrafe()">💰 Strafe berechnen</button>
+
+            <div id="strafeResult"></div>
+        </section>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 Joachim vonWanze | LSPD Bewerbungsportal | <strong style="color: var(--accent-light);">Modern Web App</strong></p>
+</footer>
+
+<script>
+// Tab Switching
+function switchTab(tabName) {
+    const tabs = document.querySelectorAll('.tab-content');
+    const btns = document.querySelectorAll('.tab-btn');
+    
+    tabs.forEach(tab => tab.classList.remove('active'));
+    btns.forEach(btn => btn.classList.remove('active'));
+    
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
+}
+
+// Akte Generator
+function generateAkte() {
+    const name = document.getElementById('akteName').value || 'Name';
+    const id = document.getElementById('akteId').value || '000000';
+    const zeichen = document.getElementById('akteZeichen').value || '2026-001-LSPD';
+    const poli = document.getElementById('aktePoli').value || 'Officer Name';
+    
+    const akteResult = `
+        <div class="result-box">
+            <h3>📄 Generierte Akte</h3>
+            <pre style="background: #f8f9fa; padding: 1rem; border-radius: 4px; overflow-x: auto;">
+════════════════════════════════════════
+          LSPD - POLIZEAKTE
+════════════════════════════════════════
+
+Aktenzeichen: ${zeichen}
+Datum: ${new Date().toLocaleDateString('de-DE')}
+
+────────────────────────────────────────
+BESCHULDIGTER
+────────────────────────────────────────
+Name:        ${name}
+Character ID: #${id}
+
+────────────────────────────────────────
+BEAMTER
+────────────────────────────────────────
+Name: ${poli}
+Dienststelle: LSPD Hauptquartier
+
+════════════════════════════════════════
+            </pre>
+            <button class="copy-btn" onclick="copyToClipboard(this)">📋 Kopieren</button>
+        </div>
+    `;
+    
+    document.getElementById('akteResult').innerHTML = akteResult;
+}
+
+// Dienst Calculator
+function calculateDienst() {
+    const start = document.getElementById('dienstart').value;
+    const ende = document.getElementById('dienende').value;
+    
+    if (!start || !ende) {
+        alert('Bitte beide Zeiten eingeben!');
+        return;
+    }
+    
+    const [startH, startM] = start.split(':').map(Number);
+    const [endeH, endeM] = ende.split(':').map(Number);
+    
+    let startMin = startH * 60 + startM;
+    let endeMin = endeH * 60 + endeM;
+    
+    if (endeMin < startMin) {
+        endeMin += 24 * 60;
+    }
+    
+    const differenz = endeMin - startMin;
+    const stunden = Math.floor(differenz / 60);
+    const minuten = differenz % 60;
+    
+    const dienstResult = `
+        <div class="result-box">
+            <h3>⏱️ Dienststunden</h3>
+            <p><strong>Dienstbeginn:</strong> ${start} Uhr</p>
+            <p><strong>Dienst-Ende:</strong> ${ende} Uhr</p>
+            <p style="font-size: 1.3rem; margin-top: 1rem;"><strong>Gesamtstunden: ${stunden}h ${minuten}m</strong></p>
+        </div>
+    `;
+    
+    document.getElementById('dienstResult').innerHTML = dienstResult;
+}
+
+// Strafe Calculator
+function calculateStrafe() {
+    const grundstrafe = parseFloat(document.getElementById('grundstrafe').value) || 0;
+    const modifikator = parseFloat(document.getElementById('modifikator').value) || 1;
+    
+    const endstrafe = Math.round(grundstrafe * modifikator);
+    
+    const strafeResult = `
+        <div class="result-box">
+            <h3>💰 Straf-Berechnung</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td><strong>Grundstrafe:</strong></td>
+                    <td style="text-align: right;">$${grundstrafe.toLocaleString()}</td>
+                </tr>
+                <tr style="background: #f8f9fa;">
+                    <td><strong>Modifikator:</strong></td>
+                    <td style="text-align: right;">${modifikator}x</td>
+                </tr>
+                <tr style="border-top: 2px solid var(--accent); font-size: 1.2rem; color: var(--accent);">
+                    <td><strong>Gesamtstrafe:</strong></td>
+                    <td style="text-align: right;"><strong>$${endstrafe.toLocaleString()}</strong></td>
+                </tr>
+            </table>
+        </div>
+    `;
+    
+    document.getElementById('strafeResult').innerHTML = strafeResult;
+}
+
+// Copy to Clipboard
+function copyToClipboard(btn) {
+    const text = btn.previousElementSibling.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✅ Kopiert!';
+        setTimeout(() => { btn.textContent = '📋 Kopieren'; }, 2000);
+    });
+}
+</script>
+
+</body>
+</html>
